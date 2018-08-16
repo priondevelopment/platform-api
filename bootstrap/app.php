@@ -8,7 +8,7 @@ try {
     //
 }
 
-/*
+/**
 |--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withEloquent();
 
-/*
+/**
 |--------------------------------------------------------------------------
 | Register Container Bindings
 |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-/*
+/**
 |--------------------------------------------------------------------------
 | Register Middleware
 |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ $app->singleton(
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
-/*
+/**
 |--------------------------------------------------------------------------
 | Register Service Providers
 |--------------------------------------------------------------------------
@@ -81,9 +81,37 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Laratrust\LaratrustServiceProvider::class);
+$app->register(\Illuminate\Notifications\NotificationServiceProvider::class);
 
-/*
+
+/**
+|--------------------------------------------------------------------------
+| Configure Redis
+|--------------------------------------------------------------------------
+|
+| Configure redis to work with our platform.
+|
+*/
+
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
+$app->configure('database');
+
+
+/**
+|--------------------------------------------------------------------------
+| Load Additional Service Providers
+|--------------------------------------------------------------------------
+|
+| Let's load additional service providers.
+|
+*/
+
+$app->register(Laratrust\LaratrustServiceProvider::class);
+$app->register(Geography\GeographyServiceProvider::class);
+$app->register(Setting\SettingServiceProvider::class);
+
+
+/**
 |--------------------------------------------------------------------------
 | Load The Application Routes
 |--------------------------------------------------------------------------
@@ -94,10 +122,6 @@ $app->register(Laratrust\LaratrustServiceProvider::class);
 |
 */
 
-$app->router->group([
-    'namespace' => 'App\Http\Controllers',
-], function ($router) {
-    require __DIR__.'/../routes/web.php';
-});
+require_once __DIR__.'/../bootstrap/routes.php';
 
 return $app;
