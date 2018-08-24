@@ -1,5 +1,5 @@
 {
-    "name": "prion/cdp-api",
+    "name": "prion/plaform-api",
     "description": "The main API of Prion Development's CDP API.",
     "keywords": ["CDP", "CRM", "Prion Development"],
     "license": "MIT",
