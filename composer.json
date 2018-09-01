@@ -1,16 +1,9 @@
 {
-    "name": "prion/plaform-api",
+    "name": "priondevelopment/plaform-api",
     "description": "The main API of Prion Development's CDP API.",
     "keywords": ["CDP", "CRM", "Prion Development"],
     "license": "MIT",
     "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:prion-development/users",
-            "no-api": true
-        }
-    ],
     "require": {
         "php": ">=7.1.1",
         "laravel/lumen-framework": "5.6.*",
