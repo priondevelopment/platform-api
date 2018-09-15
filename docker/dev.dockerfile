@@ -1,0 +1,22 @@
+# Use an official PHP runtime as parent
+FROM php:${PHP_VERSION:-7.2.9}-apache
+
+# Make Sure we are Up To Date
+RUN apt update \
+	&& apt install -y p7zip \
+    p7zip-full \
+    zip \
+    unzip \
+    git \
+    wget \
+    curl \
+    && docker-php-ext-install mbstring pdo pdo_mysql
+
+# Copy HTML File
+ADD ./src/ports.conf /etc/apache2/ports.conf
+ADD ./src/apache.conf /etc/apache2/sites-enabled/apache.conf
+
+RUN a2enmod rewrite \
+    && mkdir /var/www/html/public \
+    && rm /etc/apache2/sites-enabled/000-default.conf \
+    && service apache2 restart \

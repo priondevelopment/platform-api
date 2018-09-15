@@ -8,3 +8,4 @@ Homestead.yaml
 /storage/framework/views/*
 /storage/logs/*
 .DS_Store
+/docker/docker-compose.override.yml
