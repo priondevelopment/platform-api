@@ -1,45 +1,56 @@
 <?php
 
 /**
- * Unrestricted Routes
+ * Web
+ * @Publicly Available Routes
  *
+ * These routes are available to anyone on the internet.
  */
 $app->router->group([
-    'namespace' => 'App\Http\Controllers\Unrestricted',
-    'middleware' => 'external',
+    'namespace' => 'App\Http\Controllers\Web',
 ], function ($router) {
-    require __DIR__.'/../routes/unrestricted.php';
+    require __DIR__.'/../routes/web.php';
 });
 
 
 /**
- * API Only Routes
+ * External
+ * @External API Routes
  *
- * The request must have valid API credetials to use these routes
+ * The API is split into to different segments, external and internal.
+ *
+ * The external API is available to all API credentials. It physically limits the number of routes available to
+ * the users on the Prion Platform. These routes provide the user access to data, but provides an easy way to add
+ * protection for routes that should only be used by the Prion Platform
  */
 $app->router->group([
     'namespace' => 'App\Http\Controllers\Api',
     'middleware' => ['external'],
 ], function ($router) {
-    require __DIR__.'/../routes/api.php';
+    require __DIR__.'/../routes/external.php';
 });
 
 
 /**
- * Authorized User Routes
+ * External User
+ * @External User API Routes
  *
- * Only an authorized, active API request and a logged in user can user these routes
+ * The API is split into to different segments, external and internal.
+ *
+ * The external user routes require valid API credentials and for a user to be logged into the API.
+ * A user id is associated with an API Token when a user logs in with a valid request.
  */
 $app->router->group([
     'namespace' => 'App\Http\Controllers\User',
     'middleware' => ['external','external.user'],
 ], function ($router) {
-    require __DIR__.'/../routes/user.php';
+    require __DIR__.'/../routes/external-user.php';
 });
 
 
 /**
- * Internal API Credentials
+ * Internal
+ * @Internal API Credentials
  *
  * Internal is used for things like the main website, app, etc.
  * Only an authorized, active API marked for internal use have these routes available
@@ -54,7 +65,10 @@ $app->router->group([
 
 
 /**
- * Internal API Credentials with Logged in User
+ * Internal User
+ * @Internal User Admin API
+ *
+ * The API is split into to different segments, external and internal.
  *
  * Internal is used for things like the main website, app, etc.
  * Request must be an autorized, interal API request with a logged in user
@@ -76,7 +90,7 @@ $app->router->group([
  */
 $app->router->group([
     'namespace' => 'App\Http\Controllers\Admin',
-    'middleware' => ['internal','internal.admin'],
+    'middleware' => ['internal','admin'],
     'prefix' => 'admin',
 ], function ($router) {
     require __DIR__.'/../routes/admin.php';

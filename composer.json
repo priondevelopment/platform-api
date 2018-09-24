@@ -15,7 +15,8 @@
         "predis/predis": "~1.0",
         "priondevelopment/users": "^0.1-alpha.1",
         "priondevelopment/geography": "dev-master",
-        "priondevelopment/setting": "dev-master"
+        "priondevelopment/setting": "dev-master",
+        "priondevelopment/api": "^0.1-alpha.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -27,8 +28,7 @@
             "App\\": "app/"
         },
         "files": [
-            "bootstrap/php_version.php",
-            "bootstrap/config.php"
+            "bootstrap/php_version.php"
         ]
     },
     "autoload-dev": {

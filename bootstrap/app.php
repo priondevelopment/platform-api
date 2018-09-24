@@ -48,6 +48,7 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+
 /**
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -59,13 +60,8 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
+require_once __DIR__.'/../bootstrap/middleware.php';
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
 
 /**
 |--------------------------------------------------------------------------
@@ -79,7 +75,7 @@ $app->singleton(
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(\Illuminate\Notifications\NotificationServiceProvider::class);
 
@@ -94,6 +90,20 @@ $app->register(\Illuminate\Notifications\NotificationServiceProvider::class);
 */
 
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
+
+
+/**
+|--------------------------------------------------------------------------
+| Load Configuration Files
+|--------------------------------------------------------------------------
+|
+| Include all configuration files. Please note, we might be loading
+| configuration files twice. One from composer.json and the other from
+| the code below.
+|
+ */
+
+$app->configure('app');
 $app->configure('database');
 
 
@@ -106,9 +116,9 @@ $app->configure('database');
 |
 */
 
-$app->register(Laratrust\LaratrustServiceProvider::class);
 $app->register(Geography\GeographyServiceProvider::class);
 $app->register(Setting\SettingServiceProvider::class);
+$app->register(Api\ApiServiceProvider::class);
 
 
 /**

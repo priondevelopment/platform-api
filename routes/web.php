@@ -12,9 +12,11 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return response()->json([
+        'name' => "Prion Platform API",
+        'message' => "Welcome to the Prion Platform API. Please visit prionplatform.com to sign up for a free trial and to view our documentation.",
+    ]);
 });
-
 
 /*
 |--------------------------------------------------------------------------

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16b2b3b2a9d23fc65019f5d6ce726105",
+    "content-hash": "8e4774a2d327014b6fb3a2ece4279809",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1951,17 +1951,68 @@
             "time": "2016-06-16T16:22:20+00:00"
         },
         {
+            "name": "priondevelopment/api",
+            "version": "v0.1-alpha.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/priondevelopment/api.git",
+                "reference": "83610ec302b5d3133bad6b22bf4823eec9c571a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/priondevelopment/api/zipball/83610ec302b5d3133bad6b22bf4823eec9c571a0",
+                "reference": "83610ec302b5d3133bad6b22bf4823eec9c571a0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.1",
+                "watson/rememberable": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PrionApi\\Providers\\PrionApiServiceProvider"
+                    ],
+                    "aliases": {
+                        "PrionApi": "PrionApi\\PrionApiFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src"
+                ],
+                "psr-4": {
+                    "PrionApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brandon Best",
+                    "email": "brandonbest@priondevelopmnt.com"
+                }
+            ],
+            "description": "Authenticate API Tokens.",
+            "homepage": "https://priondevelopment.com/packages/api",
+            "time": "2018-09-17T23:25:15+00:00"
+        },
+        {
             "name": "priondevelopment/geography",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/priondevelopment/geography.git",
-                "reference": "1c4b9ed74143dfd9eb7ba2f36b5521f36ad27e81"
+                "reference": "51022c61c157b4f0ba6ab4bf478f4befbe9f71fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/priondevelopment/geography/zipball/1c4b9ed74143dfd9eb7ba2f36b5521f36ad27e81",
-                "reference": "1c4b9ed74143dfd9eb7ba2f36b5521f36ad27e81",
+                "url": "https://api.github.com/repos/priondevelopment/geography/zipball/51022c61c157b4f0ba6ab4bf478f4befbe9f71fe",
+                "reference": "51022c61c157b4f0ba6ab4bf478f4befbe9f71fe",
                 "shasum": ""
             },
             "require": {
@@ -2001,7 +2052,7 @@
                 "geography",
                 "states"
             ],
-            "time": "2018-08-16T13:15:38+00:00"
+            "time": "2018-09-08T07:14:19+00:00"
         },
         {
             "name": "priondevelopment/setting",
@@ -2323,16 +2374,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": ""
             },
             "require": {
@@ -2378,7 +2429,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/console",
@@ -3840,20 +3891,23 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c"
+                "reference": "050bedf145a257b1ff02746c31894800e5122946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/cecbc684605bb0cc288828eb5d65d93d5c676d3c",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/050bedf145a257b1ff02746c31894800e5122946",
+                "reference": "050bedf145a257b1ff02746c31894800e5122946",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "extra": {
@@ -3883,7 +3937,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-06-11T11:44:00+00:00"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -4026,16 +4080,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.4",
+            "version": "7.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
-                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b331efabbb628c518c408fdfcaf571156775de2",
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2",
                 "shasum": ""
             },
             "require": {
@@ -4106,7 +4160,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-05T09:58:53+00:00"
+            "time": "2018-09-08T15:14:29+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

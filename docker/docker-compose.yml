@@ -16,6 +16,3 @@ services:
         ports:
             - 3101:3101
         restart: on-failure
-        environment:
-            VIRTUAL_HOST: "api.prionplatform.com"
-            VIRTUAL_PORT: "3201"
