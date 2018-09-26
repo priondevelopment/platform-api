@@ -40,7 +40,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
+    Error\Exceptions\Handler::class
 );
 
 $app->singleton(
@@ -118,6 +118,7 @@ $app->configure('database');
 
 $app->register(Geography\GeographyServiceProvider::class);
 $app->register(Setting\SettingServiceProvider::class);
+$app->register(Error\ErrorServiceProvider::class);
 $app->register(Api\ApiServiceProvider::class);
 
 

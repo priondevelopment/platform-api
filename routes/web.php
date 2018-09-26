@@ -29,4 +29,5 @@ $router->get('/', function () use ($router) {
 |
 */
 
+$router->get('test/error', "Test\ErrorTestController@test");
 $router->get('test/setting/{value}', "SettingTestController@getTest");

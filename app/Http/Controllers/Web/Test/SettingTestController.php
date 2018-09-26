@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Unrestricted;
+namespace App\Http\Controllers\Test;
 
 use App\Http\Controllers;
 
