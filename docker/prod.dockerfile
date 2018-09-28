@@ -17,16 +17,10 @@ RUN apt update \
     nginx \
     wget \
     && rm -f /etc/nginx/sites-enabled/default \
-    && docker-php-ext-install mbstring pdo_mysql \
-    && cd ~ \
-    && wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
-    && tar vxf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
-    && cp wkhtmltox/bin/wk* /usr/local/bin/ \
-    && rm -rf ~/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
-    && rm -rf ~/wkhtmltox
+    && docker-php-ext-install mbstring pdo_mysql
 
 # Copy HTML File
-ADD ./nginx.conf /etc/nginx/conf.d/bisnow.conf
+ADD ./nginx.conf /etc/nginx/conf.d/api.prionplatform.conf
 
 EXPOSE 9000
 CMD ["php-fpm", "-F"]
@@ -37,7 +31,7 @@ CMD ["nginx", "-g", "daemon off;"]
 # Pull from Git Repo
 RUN cd /var/www/html \
 	&& git init \
-	&& git pull git@github.com:bisnow/l5webapp.git master \
+	&& git pull git@github.com:priondevelopment/platform-api.git master \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
     && php composer-setup.php \

@@ -16,3 +16,9 @@ services:
         ports:
             - 3101:3101
         restart: on-failure
+
+# Networks
+networks:
+    default:
+        external:
+            name: nginx-proxy
