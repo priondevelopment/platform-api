@@ -20,6 +20,23 @@ $router->get('/', function () use ($router) {
 
 /*
 |--------------------------------------------------------------------------
+| Heartbeat
+|--------------------------------------------------------------------------
+|
+|   Is the Prion Platform API alive? Are our systems working?
+|
+*/
+$router->group([
+    'prefix' => 'heartbeat',
+], function () use ($router) {
+    $router->get('/', 'HeartBeatController@index');
+    $router->get('db', 'HeartBeatController@db');
+    $router->get('cache', 'HeartBeatController@db');
+});
+
+
+/*
+|--------------------------------------------------------------------------
 | Test Settings Package
 |--------------------------------------------------------------------------
 |

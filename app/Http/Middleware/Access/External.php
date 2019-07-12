@@ -15,12 +15,18 @@ namespace App\Http\Middleware\Access;
 
 use Closure;
 
-use App\Exceptions\ReturnException;
-use App\Helpers\Error;
-use App\Exceptions;
+use Api\Models;
+use Exception;
 
 class External
 {
+
+    private $error;
+
+    public function __construct()
+    {
+        $this->error = app()->make('error');
+    }
 
     /**
      * Request Requires a Valid API Connection. User is not required
@@ -34,9 +40,7 @@ class External
     public function handle($request, Closure $next, $guard = null)
     {
 
-        //
-        // TODO: Check if API Credentials Are Valid
-        //
+        $this->token();
 
         return $next($request)
             ->header('Access-Control-Allow-Origin', '*')
@@ -44,4 +48,26 @@ class External
 
     }
 
+
+    /**
+     * Pull Token and Make Sure Token is Valid
+     *
+     * @return mixed
+     */
+    public function token()
+    {
+        $this->error->required(['token','hash']);
+        $input = app('input')->only(['token','hash']);
+
+        try {
+            $token = Models\ApiToken::
+            where('token', $input['token'])
+                ->findOrFail();
+        } catch (Exception $e) {
+            $this->error->code('2010');
+        }
+        $token->compareHash($input['hash']);
+
+        return $token;
+    }
 }

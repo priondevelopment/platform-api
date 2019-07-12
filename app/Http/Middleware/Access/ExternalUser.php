@@ -2,28 +2,35 @@
 
 /*
 |---------------------------------------------------------------
-|   External User API Middleware
+|   External API Middleware
 |---------------------------------------------------------------
 |
 |   This handles API requests from external sources. It is
 |   setup by the user and the API credentials used are:
 |    - internal != 1
 |
-|   A user must be logged into the API Token to have
-|   access to this route
+|   APIs with Only External Access are available from Prion Platform
+|   clients and from external user products. All external
+|   requests need to be rate limited.
 |
 */
 
-namespace App\Http\Middleware\Access;
+namespace Api\Http\Middleware;
 
 use Closure;
 
-use App\Exceptions\ReturnException;
-use App\Helpers\Error;
-use App\Exceptions;
+use Api\Models;
+use Exception;
 
 class ExternalUser
 {
+
+    private $error;
+
+    public function __construct()
+    {
+        $this->error = app()->make('error');
+    }
 
     /**
      * Request Requires a Valid API Connection. User is not required
@@ -36,17 +43,49 @@ class ExternalUser
      */
     public function handle($request, Closure $next, $guard = null)
     {
-
-        //
-        // TODO: Make sure API Credentials = Token Are Valid
-        // TODO: Make sure User is Logged In (check the token for a valid user, log user in)
-        //
-
+        $token = $this->token();
+        $this->user($token);
 
         return $next($request)
             ->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
+    }
+
+
+    /**
+     * Pull Token and Make Sure Token is Valid
+     *
+     * @return mixed
+     */
+    public function token()
+    {
+        $this->error->required(['token','hash']);
+        $input = app('input')->only(['token','hash']);
+
+        try {
+            $token = Models\ApiToken::
+            where('token', $input['token'])
+                ->findOrFail();
+        } catch (Exception $e) {
+            $this->error->code('2010');
+        }
+        $token->compareHash($input['hash']);
+
+        return $token;
+    }
+
+
+    /**
+     * Check if a User is Logged In
+     *
+     * @param $token
+     */
+    public function user($token)
+    {
+        if (!$token->user_id) {
+            $this->error->code('2013');
+        }
     }
 
 }

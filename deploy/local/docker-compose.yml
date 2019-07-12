@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+    # Application
+    api.prionplatform:
+        container_name: api.prionplatform
+        volumes:
+            - ${APP_PATH:-/Users/brandonbest/Sites/api.prionplatform.com}:/var/www/html:rw
+        build:
+            context: ./
+            dockerfile: dev.dockerfile
+        external_links:
+            - "redis:redis"
+            - "mariadb:mariadb"
+        environment:
+            DB_HOST: "mariadb"
+            VIRTUAL_HOST: "api.prionplatform.test"
+            VIRTUAL_PORT: "3101"
+
+# Networks
+networks:
+    default:
+        external:
+            name: nginx-proxy

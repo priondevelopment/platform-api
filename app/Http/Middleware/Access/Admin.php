@@ -2,34 +2,39 @@
 
 /*
 |---------------------------------------------------------------
-|   Admin API Middleware
+|   External API Middleware
 |---------------------------------------------------------------
 |
 |   This handles API requests from external sources. It is
 |   setup by the user and the API credentials used are:
-|    - internal = 1
-|    - admin = 1
+|    - internal != 1
 |
-|   A user must be logged into the API Token to have
-|   access to this route. The credentials must be marked as
-|   internal and admin.
+|   APIs with Only External Access are available from Prion Platform
+|   clients and from external user products. All external
+|   requests need to be rate limited.
 |
 */
 
-namespace App\Http\Middleware;
+namespace Api\Http\Middleware;
 
 use Closure;
-use Auth;
 
-use App\Helpers\Error;
-use App\Exceptions;
+use Api\Models;
+use Exception;
 
-class Admin
+class InternalUser
 {
 
+    private $error;
+
+    public function __construct()
+    {
+        $this->error = app()->make('error');
+    }
+
     /**
-     * A valid API Connection is required, credentials must be marked
-     * for internal use.
+     * Request Requires a Valid API Connection. User is not required
+     * to be logged into account.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -38,18 +43,75 @@ class Admin
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        //
-        // TODO: Check if API Credentials Are Valid, Also check if a user is logged in
-        //
 
-        // Make Sure Credentials are internally valid
-        if (!$token OR !Token::token()->credentials->internal)
-            throw new Exceptions\ReturnException(515);
+        $token = $this->token();
+        $this->internal($token);
 
         return $next($request)
             ->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
+    }
+
+
+    /**
+     * Pull Token and Make Sure Token is Valid
+     *
+     * @return mixed
+     */
+    public function token()
+    {
+        $this->error->required(['token','hash']);
+        $input = app('input')->only(['token','hash']);
+
+        try {
+            $token = Models\ApiToken::
+            where('token', $input['token'])
+                ->findOrFail();
+        } catch (Exception $e) {
+            $this->error->code('2010');
+        }
+        $token->compareHash($input['hash']);
+
+        return $token;
+    }
+
+
+    /**
+     * Internal Credential Check
+     *
+     * @param $token
+     */
+    public function internal($token)
+    {
+        if (!$token->credentials->internal) {
+            $this->error->code('2012');
+        }
+    }
+
+
+    /**
+     * Check if a User is Logged In
+     *
+     * @param $token
+     */
+    public function user($token)
+    {
+        if (!$token->user_id) {
+            $this->error->code('2013');
+        }
+    }
+
+
+    /**
+     * Make Sure User is Admin
+     *
+     */
+    public function admin($token)
+    {
+        if (!$token->user->admin) {
+            $this->error->code('2014');
+        }
     }
 
 }

@@ -17,13 +17,23 @@ class ApiStatus
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->apiStatus()) {
-            return $next($request)
-                ->header('Access-Control-Allow-Origin', '*')
-                ->header('Access-Control-Allow-Methods', 'GET, POST');
+        if (!$this->apiStatus()) {
+            return $this->apiOffResponse();
         }
 
-        // API is off
+        return $next($request)
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'GET, POST');
+    }
+
+
+    /**
+     * Reponse if the API is Off
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function apiOffResponse()
+    {
         return response()
             ->json([
                 'test' => config("app.status"),
@@ -32,14 +42,14 @@ class ApiStatus
                 'code' => 503,
                 'message' => "Resource is down for maintenance. Please check status.prionplatform.com for the status of maintenance",
             ], 503);
-
     }
+
 
     /**
      *  Check the API Status
      *
      */
-    public function apiStatus () {
+    protected function apiStatus () {
 
         $config = config("app.status");
         if ($config) {

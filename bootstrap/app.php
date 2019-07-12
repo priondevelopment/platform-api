@@ -118,6 +118,7 @@ $app->configure('database');
 
 $app->register(Geography\GeographyServiceProvider::class);
 $app->register(Setting\SettingServiceProvider::class);
+$app->register(Brute\BruteServiceProvider::class);
 $app->register(Error\ErrorServiceProvider::class);
 $app->register(Api\ApiServiceProvider::class);
 
@@ -133,6 +134,11 @@ $app->register(Api\ApiServiceProvider::class);
 |
 */
 
-require_once __DIR__.'/../bootstrap/routes.php';
+if ($app->environment('testing')) {
+    // This fixes an issue with unit testing in Docker
+    require __DIR__.'/../bootstrap/routes.php';
+} else {
+    require_once __DIR__.'/../bootstrap/routes.php';
+}
 
 return $app;
