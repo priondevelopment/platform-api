@@ -6,19 +6,13 @@ services:
         container_name: api.prionplatform
         build:
             context: ./
-            dockerfile: prod.dockerfile
+            dockerfile: dockerfile
         environment:
             API_URL: ${APP_URL:-https://api.prionplatform.com}
             DB_POST: 3306
             DB_HOST: localhost
         expose:
-            - 3101
+            - 80
         ports:
-            - 3101:3101
+            - 80:80
         restart: on-failure
-
-# Networks
-networks:
-    default:
-        external:
-            name: nginx-proxy

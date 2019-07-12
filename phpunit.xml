@@ -7,11 +7,11 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">./tests/ApiAccess</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -23,5 +23,6 @@
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="SITE_URL" value="http://localhost:3101"/>
     </php>
 </phpunit>

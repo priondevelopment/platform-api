@@ -8,7 +8,7 @@ services:
             - ${APP_PATH:-/Users/brandonbest/Sites/api.prionplatform.com}:/var/www/html:rw
         build:
             context: ./
-            dockerfile: dev.dockerfile
+            dockerfile: dockerfile
         external_links:
             - "redis:redis"
             - "mariadb:mariadb"
