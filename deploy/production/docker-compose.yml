@@ -7,8 +7,7 @@ services:
         build:
             context: ./
             dockerfile: dockerfile
-            cache_from:
-                - ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_PREFIX}:${IMAGE_TAG}
+            cache_from: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_PREFIX}:${IMAGE_TAG}
         environment:
             API_URL: ${APP_URL:-https://api.prionplatform.com}
             DB_POST: 3306
