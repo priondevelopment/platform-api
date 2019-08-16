@@ -24,7 +24,7 @@ phases:
       - php --version
       - echo Build started on `date`
       - echo Building the Docker image...
-      - cd deploy
+      - cd deploy/production
       - docker-compose up -d
 
   post_build:
