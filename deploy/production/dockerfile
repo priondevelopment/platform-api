@@ -20,7 +20,7 @@ RUN apt update \
     && docker-php-ext-install mbstring pdo_mysql
 
 # Copy HTML File
-ADD ./nginx.conf /etc/nginx/conf.d/api.prionplatform.conf
+ADD ./etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
 
 EXPOSE 9000
 CMD ["php-fpm", "-F"]
