@@ -23,14 +23,8 @@ phases:
     commands:
       - php --version
       - echo Build started on `date`
-      - echo Building the Docker image...
-      - cd deploy/production
-      - docker-compose build
+      - composer install --no-interaction --prefer-dist
 
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker-compose push 2>&1 | tee -a log.txt
-      - echo printenv | tee -a log.txt
-      - printenv | tee -a log.txt

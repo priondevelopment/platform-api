@@ -3,11 +3,7 @@ FROM php:${PHP_VERSION:-7.3}-fpm
 
 # Make Sure we are Up To Date
 RUN apt update \
-	&& apt install -y p7zip \
-    p7zip-full \
-    zip \
-    unzip \
-    nginx \
+	&& apt install -y nginx \
     wget \
     && rm -f /etc/nginx/sites-enabled/default \
     && docker-php-ext-install mbstring pdo_mysql
@@ -20,13 +16,6 @@ CMD ["php-fpm", "-F"]
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
-
-# Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('SHA384', 'composer-setup.php') === ${COMPOSER_HASH:-'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1'}) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer
 
 RUN composer install --no-interaction --prefer-dist \
 	&& composer dump-autoload
