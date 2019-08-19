@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: $AWS_DOCKER_VERSION
+      php: $AWS_PHP_VERSION
     commands:
       - |
         #Install composer
