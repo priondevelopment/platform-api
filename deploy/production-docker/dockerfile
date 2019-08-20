@@ -1,6 +1,6 @@
 # Use an official PHP runtime as parent
 FROM php:${PHP_VERSION:-7.3}-fpm
-WORKDIR /src/app
+WORKDIR /var/www/html
 
 # Make Sure we are Up To Date
 RUN apt update \
@@ -19,17 +19,14 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # Copy HTML File
 ADD ./etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
 
+# Copy Repo into Image
+COPY . .
+
 EXPOSE 9000
 CMD ["php-fpm", "-F"]
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
-
-RUN ls -la
-
-RUN cd /app
-
-RUN ls -la
 
 RUN composer install --no-interaction --prefer-dist \
 	&& composer dump-autoload
