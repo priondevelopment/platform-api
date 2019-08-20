@@ -1,6 +1,6 @@
 # Use an official PHP runtime as parent
 FROM php:${PHP_VERSION:-7.3}-fpm
-WORKDIR /var/www/html
+WORKDIR /src/app
 
 # Make Sure we are Up To Date
 RUN apt update \
@@ -27,7 +27,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 RUN ls -la
 
-RUN cd /
+RUN cd /app
 
 RUN ls -la
 
@@ -35,5 +35,5 @@ RUN composer install --no-interaction --prefer-dist \
 	&& composer dump-autoload
 
 RUN php artisan optimize \
-	&& php artisan route:clear \
-	&& php artisan config:clear
+	&& php artisan route:cache \
+	&& php artisan config:cache
