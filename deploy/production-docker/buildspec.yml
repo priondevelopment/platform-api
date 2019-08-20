@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: $AWS_DOCKER_VERSION
+    commands:
+      - |
+        #Install composer
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php -r "if (hash_file('SHA384', 'composer-setup.php') === "$COMPOSER_HASH") { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+        php composer-setup.php ;
+        php -r "unlink('composer-setup.php');" ;
+        mv composer.phar /usr/local/bin/composer
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+
+  build:
+    commands:
+      - php --version
+      - echo Build started on `date`
+      - cd deploy/production/docker
+      - docker-compose build
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker-compose push
+
+artifacts:
+  files:
+    - '**/*'
