@@ -1,5 +1,6 @@
 # Use an official PHP runtime as parent
 FROM php:${PHP_VERSION:-7.3}-fpm
+WORKDIR /var/www/html
 
 # Make Sure we are Up To Date
 RUN apt update \
