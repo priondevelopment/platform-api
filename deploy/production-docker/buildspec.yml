@@ -22,8 +22,9 @@ phases:
   build:
     commands:
       - php --version
+      - ls -la
       - echo Build started on `date`
-      - cd deploy/production/docker
+      - cd deploy/production-docker
       - docker-compose build
 
   post_build:
