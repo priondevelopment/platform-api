@@ -20,7 +20,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 ADD ./etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
 
 # Copy Repo into Image
-COPY ./../.. .
+COPY ../.. /var/www/html
 
 RUN ls -la
 
