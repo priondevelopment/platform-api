@@ -5,8 +5,8 @@ services:
     api.prionplatform:
         container_name: api.prionplatform
         build:
-            context: ./
-            dockerfile: dockerfile
+            context: ../..
+            dockerfile: ./deploy/production-docker/dockerfile
         environment:
             API_URL: ${APP_URL:-https://api.prionplatform.com}
             DB_POST: 3306
