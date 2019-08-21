@@ -16,12 +16,12 @@ phases:
       - php --version
       - ls -la
       - echo Build started on `date`
-      - docker-compose build --file deploy/production-docker/docker-compose.yml
+      - docker-compose --file deploy/production-docker/docker-compose.yml build
 
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker-compose push --file deploy/production-docker/docker-compose.yml
+      - docker-compose --file deploy/production-docker/docker-compose.yml push
 
 artifacts:
   files:
