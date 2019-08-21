@@ -6,6 +6,9 @@ WORKDIR /var/www/html
 RUN apt update \
 	&& apt install -y nginx \
     wget \
+    git \
+    zip \
+    unzip \
     && rm -f /etc/nginx/sites-enabled/default \
     && docker-php-ext-install mbstring pdo_mysql
 
@@ -17,14 +20,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer
 
 # Copy HTML File
-# ADD ./deploy/production-docker/etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
+ADD ./deploy/production-docker/etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
 
 # Copy Repo into Image
 COPY . .
-
-RUN cd /var/www/html
-
-RUN ls -la
 
 EXPOSE 9000
 CMD ["php-fpm", "-F"]
@@ -32,8 +31,7 @@ CMD ["php-fpm", "-F"]
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
 
-RUN cd /var/www/html \
-    && composer install --no-interaction --prefer-dist \
+RUN composer install --no-interaction --prefer-dist \
 	&& composer dump-autoload
 
 RUN php artisan optimize \
