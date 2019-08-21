@@ -14,7 +14,6 @@ phases:
   build:
     commands:
       - php --version
-      - ls -la
       - echo Build started on `date`
       - docker-compose --file deploy/production-docker/docker-compose.yml build
 

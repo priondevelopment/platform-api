@@ -22,6 +22,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # Copy Repo into Image
 COPY . .
 
+RUN cd /var/www/html
+
 RUN ls -la
 
 EXPOSE 9000
@@ -30,7 +32,8 @@ CMD ["php-fpm", "-F"]
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
 
-RUN composer install --no-interaction --prefer-dist \
+RUN cd /var/www/html \
+    && composer install --no-interaction --prefer-dist \
 	&& composer dump-autoload
 
 RUN php artisan optimize \
