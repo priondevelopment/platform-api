@@ -17,7 +17,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer
 
 # Copy HTML File
-ADD ./deploy/production-docker/etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
+# ADD ./deploy/production-docker/etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.prionplatform.conf
 
 # Copy Repo into Image
 COPY . .
