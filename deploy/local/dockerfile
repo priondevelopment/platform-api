@@ -1,22 +1,23 @@
 # Use an official PHP runtime as parent
-FROM php:${PHP_VERSION:-7.2.9}-apache
+FROM webdevops/php-nginx:7.3
+
+ENV WEB_DOCUMENT_ROOT "/var/www/html/public"
+WORKDIR /var/www/html
 
 # Make Sure we are Up To Date
 RUN apt update \
-	&& apt install -y p7zip \
-    p7zip-full \
+	&& apt install -y nano \
+    wget \
+    git \
     zip \
     unzip \
-    git \
-    wget \
-    curl \
-    && docker-php-ext-install mbstring pdo pdo_mysql
+    && rm -f /etc/nginx/sites-enabled/default \
+    && docker-php-ext-install mbstring pdo_mysql
 
 # Copy HTML File
-ADD ./etc/ports.conf /etc/apache2/ports.conf
-ADD ./etc/apache.conf /etc/apache2/sites-enabled/apache.conf
+ADD ./deploy/local/etc/api.prionplatform.com.conf /etc/nginx/sites-enabled/api.prionplatform.conf
 
-RUN a2enmod rewrite \
-    && mkdir /var/www/html/public \
-    && rm /etc/apache2/sites-enabled/000-default.conf \
-    && service apache2 restart
+# Customize PHP
+ENV PHP_DISMOD=ioncube,mongodb
+ENV fpm.pool.access.log "/dev/null"
+ENV fpm.pool.decorate_workers_output "no"

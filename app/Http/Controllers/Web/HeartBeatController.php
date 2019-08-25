@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
+
+use App\Http\Controllers\Controller;
 
 class HeartBeatController extends Controller
 {
@@ -37,6 +39,15 @@ class HeartBeatController extends Controller
      */
     public function cache()
     {
+        app('cache')->put('test', true, 10);
+        if (app('cache')->get('test') === true) {
+            return response([
+                'status' => true
+            ]);
+        }
 
+        return response([
+            'message' => 'There was an error using the cache'
+        ], 400);
     }
 }

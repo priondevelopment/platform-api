@@ -6,12 +6,11 @@ services:
         container_name: api.prionplatform
         build:
             context: ../..
-            dockerfile: ./deploy/local/dockerfile
+            dockerfile: ./deploy/dev/dockerfile
         environment:
             APP_URL: ${APP_URL:-https://api.prionplatform.test}
             DB_HOST: "mariadb"
             LOG_CHANNEL: 'stderr'
-            REDIS_HOST: 'redis'
             VIRTUAL_HOST: "api.prionplatform.test"
             VIRTUAL_PORT: "3106"
         expose:
@@ -22,8 +21,6 @@ services:
         ports:
             - 3106:3106
         restart: on-failure
-        volumes:
-            - ${DATA_DIR:-/Users/brandonbest/Sites/api.prionplatform.com-lumen5.4}:/var/www/html:rw
 
 # Networks
 networks:
