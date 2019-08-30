@@ -32,7 +32,6 @@ $router->group([
     $router->get('/', 'HeartBeatController@index');
     $router->get('db', 'HeartBeatController@db');
     $router->get('cache', 'HeartBeatController@cache');
-    $router->
 });
 
 
