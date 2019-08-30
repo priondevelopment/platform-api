@@ -9,8 +9,8 @@ ENV SERVICE_PHPFPM_OPTS "--force-stderr"
 ENV fpm.pool.decorate_workers_output "no"
 
 # Make Sure we are Up To Date
-RUN apt update \
-	&& apt install -y nginx \
+RUN apt update -qq \
+	&& apt install -qq -y nginx \
     wget \
     git \
     zip \
