@@ -13,7 +13,14 @@ services:
             DB_HOST: localhost
         expose:
             - 80
+            - 443
         image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_PREFIX}:${IMAGE_TAG}
+        logging:
+            driver: awslogs
+            options:
+                awslogs-region: ${AWS_LOG_REGION}
+                awslogs-group: ${AWS_LOG_GROUP}
         ports:
             - 80:80
+            - 443:443
         restart: on-failure
