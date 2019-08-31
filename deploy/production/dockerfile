@@ -1,6 +1,7 @@
 # Use an official PHP runtime as parent
 FROM webdevops/php-nginx:${PHP_VERSION:-7.3}
-WORKDIR /var/www/html
+WORKDIR /app
+WEB_DOCUMENT_ROOT /app/public
 
 # Customize PHP for ECS
 ENV PHP_DISMOD=ioncube,mongodb
@@ -29,10 +30,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 ADD ./deploy/production/etc/api.prionplatform.com.conf /etc/nginx/sites-enabled/api.prionplatform.conf
 
 # Copy Repo into Image
-COPY . .
+COPY --chown=www-data:www-data . .
 
-RUN chmod -R 0755 public \
-    && chown -R www-data:www-data ./*
+# Set the public directory to be able to run
+RUN chmod -R 0755 public
 
 EXPOSE 9000
 CMD ["php-fpm", "-F"]
