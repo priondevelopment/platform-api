@@ -1,6 +1,23 @@
 version: '3'
 services:
 
+    # Prion Platform API Nginx
+    api.prionplatform-nginx:
+        container_name: api.prionplatform-nginx
+        build:
+            context: ../..
+            dockerfile: ./deploy/production/dockerfile-nginx
+        image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_PREFIX}:${IMAGE_TAG}-nginx
+        ports:
+            - 80:80
+            - 443:443
+        logging:
+            driver: awslogs
+            options:
+                awslogs-region: ${AWS_LOG_REGION}
+                awslogs-group: ${AWS_LOG_GROUP}
+        restart: on-failure
+
     # Prion Platform API
     api.prionplatform:
         container_name: api.prionplatform
@@ -11,9 +28,6 @@ services:
             API_URL: ${APP_URL:-https://api.prionplatform.com}
             DB_POST: 3306
             DB_HOST: localhost
-        expose:
-            - 80
-            - 443
         image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_PREFIX}:${IMAGE_TAG}
         logging:
             driver: awslogs
@@ -21,6 +35,5 @@ services:
                 awslogs-region: ${AWS_LOG_REGION}
                 awslogs-group: ${AWS_LOG_GROUP}
         ports:
-            - 80:80
-            - 443:443
+            - 9000:9000
         restart: on-failure

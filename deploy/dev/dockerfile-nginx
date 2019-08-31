@@ -1,0 +1,6 @@
+FROM nginx:latest
+
+ADD ./deploy/dev/etc/nginx.conf /etc/nginx/nginx.conf
+
+# Copy Repo into Image
+COPY --chown=www-data:www-data . /var/www/html

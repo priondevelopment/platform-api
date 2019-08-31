@@ -1,25 +1,36 @@
 version: '3'
 services:
 
-    # Prion Platform API
-    api.prionplatform:
-        container_name: api.prionplatform
+    # Prion Platform API Nginx
+    api.prionplatform.nginx:
+        build:
+            context: ../..
+            dockerfile: ./deploy/dev/dockerfile-nginx
+        container_name: api.prionplatform.nginx
+        environment:
+            APP_URL: ${APP_URL:-https://api-dev.prionplatform.test}
+            LOG_CHANNEL: 'stderr'
+            VIRTUAL_HOST: "api-dev.prionplatform.test"
+            VIRTUAL_PORT: "3116"
+        ports:
+            - 3116:80
+
+    # Prion Platform API PHP-FPM
+    api-dev.prionplatform:
+        container_name: api-dev.prionplatform
         build:
             context: ../..
             dockerfile: ./deploy/dev/dockerfile
         environment:
-            APP_URL: ${APP_URL:-https://api.prionplatform.test}
+            APP_URL: ${APP_URL:-https://api-dev.prionplatform.test}
             DB_HOST: "mariadb"
             LOG_CHANNEL: 'stderr'
             VIRTUAL_HOST: "api.prionplatform.test"
-            VIRTUAL_PORT: "3106"
-        expose:
-            - 3106
         external_links:
             - "redis:redis"
             - "mariadb:mariadb"
         ports:
-            - 3106:3106
+            - 9000:9000
         restart: on-failure
 
 # Networks

@@ -1,0 +1,9 @@
+FROM nginx:latest
+
+ENV WEB_DOCUMENT_ROOT /app/public
+
+# Copy HTML File
+ADD ./deploy/production/etc/api.prionplatform.com.conf /etc/nginx/sites-enabled/api.prionplatform.conf
+
+# Copy Repo into Image
+COPY --chown=www-data:www-data . /app
