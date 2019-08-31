@@ -31,6 +31,9 @@ ADD ./deploy/production/etc/api.prionplatform.com.conf /etc/nginx/conf.d/api.pri
 # Copy Repo into Image
 COPY . .
 
+RUN chmod -R 0755 public \
+    && chown -R www-data:www-data ./*
+
 EXPOSE 9000
 CMD ["php-fpm", "-F"]
 
