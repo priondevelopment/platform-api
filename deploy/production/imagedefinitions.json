@@ -1,6 +1,6 @@
 [
     {
-        "name": "prion-platform-api-prod",
+        "name": "prion_platform_api-prod",
         "imageUri": "225021028984.dkr.ecr.us-east-2.amazonaws.com/prion-platform-api:latest"
     }
 ]
