@@ -2,8 +2,8 @@ version: '3'
 services:
 
     # Prion Platform API Nginx
-    api.prionplatform-nginx:
-        container_name: api.prionplatform-nginx
+    api.prionplatform.nginx:
+        container_name: api.prionplatform.nginx
         build:
             context: ../..
             dockerfile: ./deploy/production/dockerfile-nginx
