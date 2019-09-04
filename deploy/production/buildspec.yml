@@ -15,14 +15,12 @@ phases:
     commands:
       - php --version
       - echo Build started on `date`
-      - docker-compose --file deploy/production/docker-compose.yml -d api.prionplatform.nginx build
-      - docker-compose --file deploy/production/docker-compose.yml -d api.prionplatform build
+      - docker-compose --file deploy/production/docker-compose.yml build
 
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker-compose --file deploy/production/docker-compose.yml -d api.prionplatform.nginx push
-      - docker-compose --file deploy/production/docker-compose.yml -d api.prionplatform push
+      - docker-compose --file deploy/production/docker-compose.yml push
 
 artifacts:
   files:
