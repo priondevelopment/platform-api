@@ -1,26 +1,37 @@
 version: '3'
 services:
 
+    # Prion Platform Nginx
+    api.prionplatform.nginx:
+        build:
+            context: ../..
+            dockerfile: ./deploy/local/dockerfile-nginx
+        container_name: api.prionplatform.nginx
+        environment:
+            APP_URL: ${APP_URL:-https://api.prionplatform.test}
+            VIRTUAL_HOST: "api.prionplatform.test"
+            VIRTUAL_PORT: "3106"
+        external_links:
+            - "api.prionplatform:api.prionplatform"
+        ports:
+            - 3106:80
+        restart: on-failure
+        volumes:
+            - ${DATA_DIR:-/Users/brandonbest/Sites/api.prionplatform.com-lumen5.4}:/var/www/html:rw
+
     # Prion Platform API
     api.prionplatform:
-        container_name: api.prionplatform
         build:
             context: ../..
             dockerfile: ./deploy/local/dockerfile
+        container_name: api.prionplatform
         environment:
             APP_URL: ${APP_URL:-https://api.prionplatform.test}
             DB_HOST: "mariadb"
-            LOG_CHANNEL: 'stderr'
             REDIS_HOST: 'redis'
-            VIRTUAL_HOST: "api.prionplatform.test"
-            VIRTUAL_PORT: "3106"
-        expose:
-            - 3106
         external_links:
             - "redis:redis"
             - "mariadb:mariadb"
-        ports:
-            - 3106:3106
         restart: on-failure
         volumes:
             - ${DATA_DIR:-/Users/brandonbest/Sites/api.prionplatform.com-lumen5.4}:/var/www/html:rw
