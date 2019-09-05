@@ -1,5 +1,5 @@
 # Use an official PHP runtime as parent
-FROM webdevops/php-nginx:${PHP_VERSION:-7.3}
+FROM php:${PHP_VERSION:-7.3}-fpm
 
 WORKDIR /app
 ENV WEB_DOCUMENT_ROOT /app/public
@@ -12,12 +12,11 @@ ENV fpm.pool.decorate_workers_output "no"
 
 # Make Sure we are Up To Date
 RUN apt update -qq \
-	&& apt install -qq -y wget \
+	&& apt install -qq -y nginx \
+    wget \
     git \
     zip \
     unzip \
-    nano \
-    procps \
     && rm -f /etc/nginx/sites-enabled/default \
     && docker-php-ext-install mbstring pdo_mysql
 

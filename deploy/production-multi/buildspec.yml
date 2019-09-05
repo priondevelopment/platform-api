@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: $AWS_DOCKER_VERSION
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+
+  build:
+    commands:
+      - php --version
+      - echo Build started on `date`
+      - docker-compose --file deploy/production/docker-compose.yml build
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker-compose --file deploy/production/docker-compose.yml push
+
+artifacts:
+  files:
+    - '**/*'
