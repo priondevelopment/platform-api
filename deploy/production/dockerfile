@@ -2,7 +2,7 @@
 FROM webdevops/php-nginx:${PHP_VERSION:-7.3}
 
 WORKDIR /app
-ENV WEB_DOCUMENT_ROOT /app/public
+ENV WEB_DOCUMENT_ROOT "/app/public"
 
 # Customize PHP for ECS
 ENV PHP_DISMOD=ioncube,mongodb
@@ -20,6 +20,8 @@ RUN apt update -qq \
     procps \
     && rm -f /etc/nginx/sites-enabled/default \
     && docker-php-ext-install mbstring pdo_mysql
+
+COPY ./deploy/production/etc/nginx-location-root.conf /opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
