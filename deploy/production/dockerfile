@@ -21,7 +21,7 @@ RUN apt update -qq \
     && rm -f /etc/nginx/sites-enabled/default \
     && docker-php-ext-install mbstring pdo_mysql
 
-COPY ./deploy/production/etc/api.prionplatform.conf /etc/nginx/sites-enabled/api.prionplatform.conf
+COPY ./deploy/production/etc/api.prionplatform.com.conf /etc/nginx/sites-enabled/api.prionplatform.com.conf
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
